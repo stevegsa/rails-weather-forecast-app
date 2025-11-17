@@ -85,28 +85,6 @@ http://localhost:3000/forecasts
 
 ---
 
-## 5. Running the Test Suite
-
-Run all RSpec tests:
-
-```bash
-bundle exec rspec
-```
-
-This will execute service tests, request tests, privacy checks, and coverage reporting.
-
----
-
-## 6. View Code Coverage
-
-After running RSpec, open the HTML report:
-
-```
-coverage/index.html
-```
-
----
-
 ## High‑Level Architecture
 
 ### Request Flow
