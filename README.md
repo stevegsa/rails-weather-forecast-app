@@ -202,14 +202,28 @@ config/
 
 ## Privacy & Logging
 
-This application processes user entered addresses, which are considered PII.  
-To avoid leaking sensitive data, the codebase avoids logging raw addresses or
-provider error payloads. Error handlers surface only user friendly messages and
-log only high level context when needed.
+This application processes user-entered street addresses, which are treated as **PII** (Personally Identifiable Information). To protect user privacy, the codebase follows strict defensive logging rules:
 
-Rails request logging can include parameters (including `address`) unless
-filtered. For production deployments, `config.filter_parameters` should include
-`:address` to ensure it is redacted.
+### 🔒 PII Safety Measures
+
+- **Raw addresses are never logged.**  
+  All service layers log only exception classes or high-level context — never user input.
+
+- **Geocoder provider logging is disabled in production.**  
+  This prevents upstream error payloads (which often echo the full address) from appearing in logs.
+
+- **Error handlers intentionally avoid including PII.**  
+  When failures occur (geocoding errors, API timeouts, etc.), user-friendly messages are returned to the UI, while logs only receive non-PII diagnostics.
+
+- **Rails parameter filtering is enabled.**  
+  In `config/application.rb`, the `:address` parameter is added to `config.filter_parameters`, ensuring request logs redact it in all environments.
+
+- **RSpec tests enforce PII-safe behavior.**  
+  The test suite includes checks confirming that address strings never appear in logged error messages.
+
+### 🛡️ Summary
+
+These safeguards ensure that user addresses never leak into application logs, provider logs, or exception traces — supporting secure handling of sensitive data across the entire request lifecycle.
 
 ## Screenshots
 
