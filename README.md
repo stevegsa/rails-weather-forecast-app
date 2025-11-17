@@ -120,7 +120,6 @@ The `v1` namespace supports future schema changes without breaking old entries.
   - Plugging in circuit breakers
 - Caching reduces API calls dramatically under real workloads
 - Value objects guarantee consistent shape even if upstream responses vary
-- The UI is intentionally simple
 
 ---
 
