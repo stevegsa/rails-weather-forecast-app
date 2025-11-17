@@ -6,21 +6,103 @@ renders the results through a simple UI.
 
 ---
 
-## Requirements
+## Features
 
-- **Ruby:** 3.2+
-- **Rails:** 7+
+- Accepts free-form user-entered street addresses
+- Converts addresses into coordinates and ZIP codes using the **Google Geocoding API**
+- Retrieves current and extended weather forecasts from the **OpenWeather OneCall 3.0 API**
+- Caches forecasts by ZIP code to reduce latency and external API usage
+- Fully PII-safe: address is never logged, filtered at the Rails parameter level, and provider logging disabled in production
+- Comprehensive RSpec test suite covering service objects, error handling, caching behavior, and privacy rules
+- Simple, clean UI showing current conditions, today’s high/low, and a 5-day forecast
+
+# Installation & Running the App
+
+Follow these steps to install dependencies, configure API keys, and run the Rails Weather Forecast application locally.
+
+---
+
+## Prerequisites
+
+Make sure the following are installed on your system:
+
+- **Ruby 3.2+**
+- **Rails 7+**
 - **Bundler**
-- **Google Geocoding API key**
-- **OpenWeather OneCall 3.0 API key**
+- **SQLite3**
+- **Git**
 
-Run setup:
+You will also need valid API keys for:
+
+- **Google Geocoding API**
+- **OpenWeather OneCall 3.0 API**
+
+---
+
+## 1. Clone the Repository
+
+```bash
+git clone https://github.com/stevegsa/rails-weather-forecast-app.git
+cd rails-weather-forecast-app
+```
+
+---
+
+## 2. Install Dependencies
+
+Install all Ruby gems:
 
 ```bash
 bundle install
+```
+
+---
+
+## 3. Export API Keys
+
+Set your API keys as environment variables:
+
+```bash
 export GOOGLE_GEOCODING_API_KEY=your_google_key
 export OPENWEATHER_API_KEY=your_openweather_key
+```
+
+You can also add these to your shell profile (`~/.zshrc`, `~/.bashrc`, etc.) so they load automatically.
+
+---
+
+## 4. Start the Rails Server
+
+```bash
 bin/rails server
+```
+
+The app will be available at:
+
+```
+http://localhost:3000/forecasts
+```
+
+---
+
+## 5. Running the Test Suite
+
+Run all RSpec tests:
+
+```bash
+bundle exec rspec
+```
+
+This will execute service tests, request tests, privacy checks, and coverage reporting.
+
+---
+
+## 6. View Code Coverage
+
+After running RSpec, open the HTML report:
+
+```
+coverage/index.html
 ```
 
 ---
@@ -194,6 +276,7 @@ spec/
     weather/
       openweather_one_call_sample.json
 config/
+  routes.rb
   initializers/
     geocoder.rb
     forecast.rb
@@ -227,12 +310,12 @@ These safeguards ensure that user addresses never leak into application logs, pr
 
 ## Screenshots
 
-### Non-cached forecast
+### 📸 Non-cached forecast (first lookup)
 
 ![WScreenshot of weather forecast UI](docs/screenshots/weather-forecast.png)
 <br><br>
 
-### Cached forecast
+### 📸 Cached forecast (subsequent lookup)
 
 ![WScreenshot of cached weather forecast UI](docs/screenshots/weather-forecast-cached.png)
 <br><br>
