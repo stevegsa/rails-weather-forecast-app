@@ -211,3 +211,7 @@ log only high level context when needed.
 Rails request logging can include parameters (including `address`) unless
 filtered. For production deployments, `config.filter_parameters` should include
 `:address` to ensure it is redacted.
+
+![WScreenshot of weather forecast UI](docs/screenshots/weather-forecast.png)
+
+![WScreenshot of cached weather forecast UI](docs/screenshots/weather-forecast-cached.png)
