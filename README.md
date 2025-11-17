@@ -214,6 +214,10 @@ filtered. For production deployments, `config.filter_parameters` should include
 
 ## Screenshots
 
+### Non-cached forecast
+
 ![WScreenshot of weather forecast UI](docs/screenshots/weather-forecast.png)
+
+### Cached forecast
 
 ![WScreenshot of cached weather forecast UI](docs/screenshots/weather-forecast-cached.png)
