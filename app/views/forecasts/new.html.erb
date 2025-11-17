@@ -1,0 +1,54 @@
+<!-- app/views/forecasts/new.html.erb -->
+<!-- Address input and forecast display -->
+<div class="center-text mt-24">
+  <h1>Weather Forecast</h1>
+  <%= form_with url: forecasts_path, method: :post, local: true, data: { turbo: false } do |form| %>
+    <div>
+      <%= form.label :address, "Enter an address" %><br>
+      <%= form.text_field :address, value: @address, size: 50 %>
+    </div>
+    <div class="mt-10">
+      <%= form.submit "Get Forecast" %>
+    </div>
+  <% end %>
+  <% if flash[:alert].present? %>
+    <p class="flash-alert"><%= flash[:alert] %></p>
+  <% end %>
+  <br>
+</div>
+<% if @forecast.present? %>
+  <hr>
+  <div class="weather-container">
+    <h2>Zip Code <%= @detailed_forecast.zip_code %></h2>
+    <div class="weather-temp">
+      <%= @forecast.current_temp.round %>°
+    </div>
+    <div class="weather-description">
+      <%= @forecast.current_description %>
+    </div>
+    <div class="weather-hi-lo">
+      H: <%= @forecast.today_high.round %>°    L: <%= @forecast.today_low.round %>°
+    </div>
+  </div>
+  <div class="center-text mt-0">
+    <% if @detailed_forecast.from_cache %>
+      <p class="cache-indicator">(Loaded from cache)</p>
+    <% end %>
+  </div>
+<% end %>
+<% if @forecast.present? && @forecast.daily.present? %>
+  <div class="center-text mt-24">
+    <h3>5-DAY FORECAST</h3>
+    <div class="flex-row flex-wrap gap-16">
+      <% @forecast.daily.each_with_index do |day, index| %>
+        <div class="daily-forecast-item">
+          <div class="daily-date"><%= index.zero? ? 'Today' : day.date.strftime("%a") %></div>
+          <div class="daily-desc"><%= day.description %></div>
+          <div class="daily-hi-lo">
+            H: <%= day.high.round %>°   L: <%= day.low.round %>°
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>
